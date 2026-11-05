@@ -1,7 +1,7 @@
 {
-  "name": "Escáner de Mamá",
+  "name": "Escáner PDF",
   "short_name": "Escáner",
-  "description": "Convierte fotos de documentos en PDF, sin publicidad y sin conexión.",
+  "description": "Convierte fotos de documentos y archivos Word en PDF, sin publicidad y sin conexión.",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",

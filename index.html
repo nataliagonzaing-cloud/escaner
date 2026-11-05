@@ -73,6 +73,10 @@ h2{font-size:14px; text-transform:uppercase; letter-spacing:.08em; color:var(--t
 .controles button:disabled{opacity:.3}
 .controles .borrar{color:var(--peligro)}
 .controles .recortar{color:var(--azul); font-weight:700}
+.controles .mover{color:var(--azul); font-weight:700; font-size:20px}
+.controles .mover:disabled{color:var(--tinta-suave)}
+#ordenAyuda{font-size:13px; color:var(--tinta-suave); margin:-4px 0 12px}
+#ordenAyuda b{color:var(--azul)}
 
 fieldset{border:1px solid var(--borde); border-radius:var(--radio); background:var(--tarjeta); margin:0 0 14px; padding:12px 14px 14px}
 legend{font-size:13px; font-weight:650; color:var(--tinta-suave); text-transform:uppercase; letter-spacing:.06em; padding:0 6px}
@@ -149,6 +153,7 @@ footer{font-size:13px; color:var(--tinta-suave); text-align:center; margin:28px 
   <input type="file" id="entradaWord" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
 
   <h2 id="tituloPaginas">Páginas</h2>
+  <p id="ordenAyuda" hidden>Para cambiar el orden usá <b>←</b> y <b>→</b> en cada página. El número azul indica en qué lugar va a salir en el PDF.</p>
 
   <div id="vacio">
     <strong>Todavía no hay páginas</strong>
@@ -929,6 +934,7 @@ async function dibujarLista() {
     ? "Crear PDF de " + estado.paginas.length + (estado.paginas.length === 1 ? " página" : " páginas")
     : "Crear PDF";
   tituloEl.textContent = hay ? "Páginas (" + estado.paginas.length + ")" : "Páginas";
+  $("#ordenAyuda").hidden = estado.paginas.length < 2;
 
   listaEl.textContent = "";
   estado.paginas.forEach((p, i) => listaEl.appendChild(tarjetaPagina(p, i)));
@@ -965,8 +971,8 @@ function tarjetaPagina(pagina, indice) {
   const ctrl = document.createElement("div");
   ctrl.className = "controles";
   ctrl.append(
-    boton("←", "Mover antes", indice === 0, () => mover(indice, -1)),
-    boton("→", "Mover después", indice === estado.paginas.length - 1, () => mover(indice, 1)),
+    boton("←", "Mover antes", indice === 0, () => mover(indice, -1), "mover"),
+    boton("→", "Mover después", indice === estado.paginas.length - 1, () => mover(indice, 1), "mover"),
     boton("⟳", "Girar", false, () => girar(indice))
   );
   if (pagina.tipo === "foto") {
